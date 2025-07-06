@@ -1,9 +1,10 @@
+import { Outlet } from "react-router-dom"
 
 
 function Admin() {
   return (
     <div>
-        Admin Render
+        <Outlet/>
     </div>
   )
 }

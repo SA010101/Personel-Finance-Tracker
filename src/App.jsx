@@ -16,7 +16,7 @@ import TransactionOversight from '../src/Components/Admin Side/TransactionOversi
 import BudgetMonitoring from '../src/Components/Admin Side/BudgetMonitoring'
 import UserManagement from '../src/Components/Admin Side/UserManagement'
 import RolesAndPermissions from '../src/Components/Admin Side/RolesAndPermissions'
-import UpdateProfile from '../src/Components/Admin Side/UpdateProfile'
+import UpdateAdminProfile from './Components/Admin Side/UpdateAdminProfile'
 
 
 
@@ -51,8 +51,8 @@ function App() {
         <Route path='TransactionOversight' element={<TransactionOversight/>}/>
         <Route path='BudgetMonitoring' element={<BudgetMonitoring/>}/>
         <Route path='UserManagement' element={<UserManagement/>}/>
-         <Route path='RolesAndPermissionsUserManagement' element={<RolesAndPermissions/>}/>
-          <Route path='UpdateProfile' element={<UpdateProfile/>}/>
+        <Route path='RolesAndPermissions' element={<RolesAndPermissions/>}/>
+        <Route path='UpdateProfile' element={<UpdateAdminProfile/>}/>
         
         </Route>
 
