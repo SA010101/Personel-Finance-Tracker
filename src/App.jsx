@@ -1,11 +1,34 @@
 import './App.css'
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 
 function App() {
 
   return (
-    <>
-      <div className='bg-green-100'>Assalamoalaikom</div>
-    </>
+    
+      <BrowserRouter>
+        <Routes>
+
+        {/* Auth Routing */}
+        <Route path=''/>
+
+        {/* User Side Routing */}
+        <Route >
+
+        
+
+        </Route>
+
+        {/* Admin Side Routing */}
+
+        <Route>
+
+          
+        </Route>
+
+        </Routes>
+      
+      </BrowserRouter>
+
   )
 }
 
