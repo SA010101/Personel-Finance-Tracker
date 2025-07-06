@@ -1,6 +1,9 @@
 import './App.css'
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 
+
+import Landing from './Components/LandingPage/Landing';
+
 import Register from '../src/Components/Auth/Register'
 import Login from '../src/Components/Auth/Login'
 
@@ -26,6 +29,9 @@ function App() {
     
       <BrowserRouter>
         <Routes>
+
+        {/* Landing Page */}
+        <Route path='/' element={<Landing/>}/>
 
         {/* Auth Routing */}
         <Route path='/Register' element={<Register/>}/>
