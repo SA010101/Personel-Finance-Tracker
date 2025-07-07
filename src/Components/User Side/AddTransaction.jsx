@@ -5,17 +5,15 @@
       const BASE_URL="http://localhost:9000/app"
 
       const token=localStorage.getItem('token')
-      const [month,setMonth]=useState("")
-      const [totalbudget,setTotalbudget]=useState(0)
       const [categoriesdata,setCategoriesdata]=useState([])
       const [transactionsdata,setTransactionsdata]=useState([])
       console.log(transactionsdata)
 
-    //   const BudgetData = {
-    //   month: month,
-    //   totalBudget: totalbudget,
-    //   categoryBudgets: categoryBudgets,
-    // };
+      // Formatting Date and Time
+      const formatDate = (dateStr) => {
+          const date = new Date(dateStr);
+          return `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} ${date.getFullYear()}`;
+        };
 
     {/* API for fetch Categories */}
     const fetchCategories = async () => {
@@ -66,6 +64,31 @@
       }
     };
 
+    {/* Delete Transaction API */}
+    const deleteTransaction = async (transactionId) => {
+
+  try {
+    const response = await fetch(`${BASE_URL}/deleteTransaction/${transactionId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      console.log(`Transaction ${transactionId} deleted successfully`);
+      fetchTransactions();
+    } else {
+      const errorData = await response.json();
+      console.error('Failed to delete transaction:', errorData.message || response.statusText);
+    }
+
+  } catch (error) {
+    console.error('Error deleting transaction:', error.message || error);
+  }
+};
+
+
     useEffect(()=>{
     fetchCategories(),
     fetchTransactions()
@@ -100,6 +123,12 @@
                         <button className="bg-blue-200 px-4 py-1 rounded-lg font-semibold">Income</button>
                       </div>
 
+                      <select name="" id="">
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                      </select>
+
                       <div className="flex flex-col gap-1">
                           <label htmlFor="">Amount (Rs)</label>
                           <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="number" placeholder="0.00"/>
@@ -117,13 +146,36 @@
 
                     </div>
 
-
                   <button className="bg-blue-500 px-3 py-1 cursor-pointer rounded-lg">Save Budget</button>
                   </form>
                 </div>
                 <div className="flex flex-col px-4 py-4 gap-7 rounded-lg bg-yellow-100">
 
-                  hh
+                  <div className="flex gap-3 items-center">
+                    <div>📋</div>
+                    <h1>Recent Transactions</h1>
+                  </div>
+
+                  {
+                    transactionsdata.length===0? <div>No Transactions Yet</div>:
+                    transactionsdata.map((transaction,index)=>{
+                     return <div key={index} className="flex justify-between w-80 bg-orange-500 h-20">
+
+                                <div className="flex flex-col">
+                                  <h1>{transaction.type}</h1>
+                                  <h1>{transaction.category}</h1>
+                                  <h1>{formatDate(transaction.date)}</h1>
+                                </div>
+                                
+                                <div className="flex items-center gap-2">
+                                  <h1>Rs: {transaction.amount}</h1>
+                                  <button onClick={()=>{deleteTransaction(transaction._id)}}>Delete Icon</button>
+                                </div>
+
+                            </div>
+                    })
+                  }
+
                 </div>
               </div>
 
