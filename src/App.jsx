@@ -36,10 +36,9 @@ function App() {
         {/* Auth Routing */}
         <Route path='/Register' element={<Register/>}/>
         <Route path='/Login' element={<Login/>}/>
-        
 
         {/* User Side Routing */}
-        <Route path='/User' element={<User/>}>
+        <Route path='/User-Dashboard' element={<User/>}>
 
         <Route index element={<Overview/>}/>
         <Route path='AddTransaction' element={<AddTransaction/>}/>
