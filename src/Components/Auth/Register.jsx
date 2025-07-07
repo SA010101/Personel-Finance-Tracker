@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 function Register() {
 
     const BASE_URL="http://localhost:9000/app"
+    const navigate=useNavigate()
 
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
@@ -18,6 +20,7 @@ function Register() {
         email:email,
         password:password,
       }
+      console.log(RegisterData)
 
     try {
         const response = await fetch(`${BASE_URL}/register`, {
@@ -32,7 +35,7 @@ function Register() {
         console.log(data);
 
         if (response.ok) {
-          alert('User Register Successful');
+          alert('User Register Successfully');
           navigate("/Login")
 
         } else {
