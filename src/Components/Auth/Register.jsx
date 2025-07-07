@@ -62,7 +62,7 @@ function Register() {
           <form onSubmit={RegisterAPI} className="w-full flex flex-col gap-5 items-center" action="">
             <input className="w-full outline-0 border border-black rounded-lg py-2 px-3" type="text" placeholder="Full Name" onChange={(e)=>{setName(e.target.value)}}/>
             <input className="w-full outline-0 border border-black rounded-lg py-2 px-3" type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
-            <input className="w-full outline-0 border border-black rounded-lg py-2 px-3" type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
+            <input autoComplete="on" className="w-full outline-0 border border-black rounded-lg py-2 px-3" type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
             <button className="w-full outline-0 border border-black rounded-lg py-2 px-3 font-semibold cursor-pointer">Create Account</button>
           </form>
           <div className="flex flex-col items-center gap-1">
