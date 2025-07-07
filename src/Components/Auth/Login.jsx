@@ -32,7 +32,7 @@ function Login() {
         console.log(data);
 
         if (response.ok) {
-          alert('User Register Successful');
+          alert('User Login Successful');
           localStorage.setItem('token',data.token)
           localStorage.setItem('userId',data.user._id)
           localStorage.setItem('userName',data.user.name)
