@@ -7,6 +7,7 @@
       const token=localStorage.getItem('token')
       const [month,setMonth]=useState("")
       const [totalbudget,setTotalbudget]=useState(0)
+      const [categoryName,setCategoryname]=useState("")
       const [categoryBudgets, setCategoryBudgets] = useState({});
       const [categoriesdata,setCategoriesdata]=useState([])
       console.log(categoryBudgets)
@@ -63,6 +64,7 @@
         const data = await response.json();
         if(response.ok){
           alert("Category Added")
+          fetchCategories()
         }
         console.log('Saved:', data);
       } catch (error) {
