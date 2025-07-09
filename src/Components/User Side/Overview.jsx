@@ -204,18 +204,36 @@
 
                   <div className="w-full flex flex-col bg-blue-200 justify-between">
 
-                      <div className="flex gap-2">
-                        <div>Icon</div>
-                        <h1>Monthly Budget Progress</h1>
-                      </div>
-                      <div className="flex items-center justify-between gap-3">
-                        <div>Horizintal Bar</div>
-                        <div className="flex flex-col px-2 py-2 gap-2 rounded-lg  bg-green-200 ">
-                         <h1>Rs {TotalExpense} / Rs {budgetdata.totalBudget}</h1>
-                         <h1>{Number((TotalExpense / budgetdata.totalBudget) * 100).toFixed(2)}% Used</h1>
+                      <div className="space-y-4">
+  {/* Header Row */}
+  <div className="flex gap-2 items-center">
+    <div>📊</div>
+    <h1 className="text-lg font-semibold">Monthly Budget Progress</h1>
+  </div>
 
-                          </div>
-                      </div>
+  {/* Progress Section */}
+  <div className="flex items-center justify-between gap-4">
+    
+    {/* Horizontal Bar */}
+    <div className="flex-1 bg-gray-200 rounded-full h-6 overflow-hidden">
+      <div
+        className="bg-green-500 h-full rounded-full"
+        style={{ width: `${(TotalExpense / budgetdata.totalBudget) * 100}%` }}
+      ></div>
+    </div>
+
+    {/* Stats Box */}
+    <div className="flex flex-col px-4 py-2 gap-1 rounded-lg bg-green-100 text-green-800 font-medium text-sm">
+      <h1>
+        Rs {TotalExpense} / Rs {budgetdata.totalBudget}
+      </h1>
+      <h1>
+        {Number((TotalExpense / budgetdata.totalBudget) * 100).toFixed(2)}% Used
+      </h1>
+    </div>
+  </div>
+</div>
+
 
               </div>
 
