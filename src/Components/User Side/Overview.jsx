@@ -5,6 +5,7 @@
       const BASE_URL="http://localhost:9000/app"
 
       const token=localStorage.getItem('token')
+      const [month] = useState(() => new Date().toISOString().slice(0, 7));
       const [categoriesdata,setCategoriesdata]=useState([])
       const [transactionsdata,setTransactionsdata]=useState([])
       const [budgetdata,setBudgetdata]=useState([])
@@ -93,8 +94,7 @@
 
         if (response.ok) {
       alert("Budget fetched")
-      console.log(data)
-          setBudgetdata(data.budgets)
+          setBudgetdata(data)
         }
 
       } catch (error) {
@@ -102,41 +102,6 @@
       }
     };
 
-
-    {/* API for Add Transaction */}
-    const AddTransactions = async (e) => {
-       e.preventDefault();
-
-      const AddTransactionData={
-        category: category,
-        amount: amount,
-        type: type,
-        date: date,
-        note: note,
-      }
-
-      try {
-        const response = await fetch(`${BASE_URL}/addTransaction`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body:JSON.stringify(AddTransactionData)
-        });
-
-        const data = await response.json();
-        console.log('Categories:', data);
-
-        if (response.ok) {
-          alert("Transaction Added")
-          fetchTransactions()
-        }
-
-      } catch (error) {
-        console.error('Error fetching categories:', error.message || error);
-      }
-    };
 
     {/* Delete Transaction API */}
     const deleteTransaction = async (transactionId) => {
@@ -232,14 +197,110 @@
                       <div className="flex items-center justify-between gap-3">
                         <div>Horizintal Bar</div>
                         <div className="flex flex-col px-2 py-2 gap-2 rounded-lg  bg-green-200 ">
-                         <h1>Rs Total Expense / Rs Total Budget</h1>
-                          <h1>Percentage Utilization</h1>
+                         <h1>Rs {TotalExpense} / Rs {budgetdata.totalBudget}</h1>
+                         <h1>{Number((TotalExpense / budgetdata.totalBudget) * 100).toFixed(2)}% Used</h1>
+
                           </div>
                       </div>
 
               </div>
 
+                 <div className="w-full flex flex-col justify-between px-3 py-2 gap-5 rounded-lg bg-blue-100">
 
+                  <div className="flex gap-2">
+                    <div>📊</div>
+                    <h1>Category Spending</h1>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="flex flex-col gap-2 bg-green-200 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <h1>Food</h1>
+                        <h1>Percentage</h1>
+                      </div>
+                      <div>Rs Expense/Budget Allocated</div>
+                      <div>Horizintal Bar</div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 bg-green-200 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <h1>Food</h1>
+                        <h1>Percentage</h1>
+                      </div>
+                      <div>Rs Expense/Budget Allocated</div>
+                      <div>Horizintal Bar</div>
+                    </div>
+                  </div>
+
+              </div>
+
+
+
+        <div className="w-full flex justify-between px-3 py-2 gap-5 rounded-lg bg-blue-100">
+
+                <div className="flex flex-col gap-3 bg-fuchsia-50">
+
+                 <div className="w-full flex items-center gap-3">
+                  <div>🔄</div>
+                  <h1>Income vs Expense Trend</h1>
+                </div>
+
+                  <div>Graph will here</div>
+
+                </div>
+                
+                <div className="flex flex-col gap-3 bg-fuchsia-50">
+
+                 <div className="w-full flex items-center gap-3">
+                  <div>🥧</div>
+                  <h1>Expense Distribution</h1>
+                </div>
+
+                  <div>Here will be pie pie Chart (Category Expense Amount) Vs (Total expenses amount) percentage base</div>
+
+                </div>
+                
+        </div> 
+
+
+
+
+                <div className="w-full flex flex-col justify-between px-3 py-2 gap-5 rounded-lg bg-blue-100">
+
+                <div className="w-full flex items-center gap-3">
+                  <div>🔄</div>
+                  <h1>Budget vs Actual Spending</h1>
+                </div>
+                  
+                  <h1>Here The graph of Budget Vs Actual</h1>
+                
+                  </div>              
+
+
+
+
+              <div className="w-full flex flex-col justify-between px-3 py-2 gap-5 rounded-lg bg-blue-100">
+
+                <div className="w-full flex items-center gap-3">
+                  <div>🔄</div>
+                  <h1>Recent Transactions</h1>
+                </div>
+                  
+                {
+                  transactionsdata.length==0? <div>No Transactions</div>:
+                  transactionsdata.map((transaction,index)=>{
+                    return <div className="flex justify-between items-center">
+                  <div className="flex flex-col gap-2">
+                    <h1>{transaction.category}</h1>
+                    <h1>{transaction.date}</h1>
+                  </div>
+                  <div>Rs: {transaction.amount}</div>
+                  <button className="cursor-pointer" onClick={()=>{deleteTransaction(transaction._id)}}>Delete Icon</button>
+                </div>
+
+                  })
+                }
+                
+                  </div>
           </div>
           
         </div>
