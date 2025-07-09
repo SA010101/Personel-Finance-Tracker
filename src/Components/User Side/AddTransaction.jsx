@@ -7,7 +7,13 @@
       const token=localStorage.getItem('token')
       const [categoriesdata,setCategoriesdata]=useState([])
       const [transactionsdata,setTransactionsdata]=useState([])
+      const [category,setCategory]=useState("")
+      const [amount,setAmount]=useState("")
+      const [type,setType]=useState("")
+      const [date,setDate]=useState("")
+      const [note,setNote]=useState("")
       console.log(transactionsdata)
+      console.log(type)
 
       // Formatting Date and Time
       const formatDate = (dateStr) => {
@@ -17,7 +23,6 @@
 
     {/* API for fetch Categories */}
     const fetchCategories = async () => {
-      const token = localStorage.getItem('token');
 
       try {
         const response = await fetch(`${BASE_URL}/categories`, {
@@ -41,7 +46,6 @@
 
     {/* API for fetch Transactions */}
     const fetchTransactions = async () => {
-      const token = localStorage.getItem('token');
 
       try {
         const response = await fetch(`${BASE_URL}/transactions`, {
@@ -49,6 +53,39 @@
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        });
+
+        const data = await response.json();
+        console.log('Categories:', data);
+
+        if (response.ok) {
+      
+          setTransactionsdata(data)
+        }
+
+      } catch (error) {
+        console.error('Error fetching categories:', error.message || error);
+      }
+    };
+
+    {/* API for Add Transaction */}
+    const AddTransactions = async () => {
+
+      const AddTransactionData={
+        category: category,
+        amount: amount,
+        type: type,
+        date: date,
+        note: note,
+      }
+
+      try {
+        const response = await fetch(`${BASE_URL}/addTransaction`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body:JSON.stringify(AddTransactionData)
         });
 
         const data = await response.json();
@@ -119,8 +156,8 @@
                     <div className="flex flex-col gap-2">
                       <h1>Transaction Type</h1>
                       <div className="flex gap-4">
-                        <button className="bg-green-200 px-4 py-1 rounded-lg font-semibold">Expense</button>
-                        <button className="bg-blue-200 px-4 py-1 rounded-lg font-semibold">Income</button>
+                        <button className="bg-green-200 px-4 py-1 rounded-lg font-semibold" onClick={()=>{setType("EXPENSE")}}>Expense</button>
+                        <button className="bg-blue-200 px-4 py-1 rounded-lg font-semibold" onClick={()=>{setType("INCOME")}}>Income</button>
                       </div>
 
                       <select name="" id="">
@@ -131,17 +168,17 @@
 
                       <div className="flex flex-col gap-1">
                           <label htmlFor="">Amount (Rs)</label>
-                          <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="number" placeholder="0.00"/>
+                          <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="number" placeholder="0.00" onChange={(e)=>{setAmount(e.target.value)}}/>
                       </div>
 
                      <div className="flex flex-col gap-1">
                           <label htmlFor="">Date</label>
-                          <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="date" placeholder="0.00"/>
+                          <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="date" onChange={(e)=>{setDate(e.target.value)}}/>
                     </div>
 
                     <div className="flex flex-col gap-1">
                           <label htmlFor="">Note (Optional)</label>
-                          <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="text" placeholder="Add a note"/>
+                          <input className="w-full px-3 py-1 outline-0 border border-black rounded-lg" type="text" placeholder="Add a note" onChange={(e)=>{setNote(e.target.value)}}/>
                     </div>
 
                     </div>
