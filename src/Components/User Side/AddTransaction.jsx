@@ -9,11 +9,9 @@
       const [transactionsdata,setTransactionsdata]=useState([])
       const [category,setCategory]=useState("")
       const [amount,setAmount]=useState("")
-      const [type,setType]=useState("")
+      const [type,setType]=useState("expense")
       const [date,setDate]=useState("")
       const [note,setNote]=useState("")
-      console.log(transactionsdata)
-      console.log(type)
 
       // Formatting Date and Time
       const formatDate = (dateStr) => {
@@ -69,7 +67,8 @@
     };
 
     {/* API for Add Transaction */}
-    const AddTransactions = async () => {
+    const AddTransactions = async (e) => {
+       e.preventDefault();
 
       const AddTransactionData={
         category: category,
@@ -83,6 +82,7 @@
         const response = await fetch(`${BASE_URL}/addTransaction`, {
           method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body:JSON.stringify(AddTransactionData)
@@ -92,8 +92,8 @@
         console.log('Categories:', data);
 
         if (response.ok) {
-      
-          setTransactionsdata(data)
+          alert("Transaction Added")
+          fetchTransactions()
         }
 
       } catch (error) {
@@ -151,19 +151,28 @@
                     <div>📝</div>
                     <h1>New Transaction</h1>
                   </div>
-                  <form className="flex flex-col gap-3" action="">
+                  <form onSubmit={AddTransactions} className="flex flex-col gap-3" action="">
                     
                     <div className="flex flex-col gap-2">
                       <h1>Transaction Type</h1>
                       <div className="flex gap-4">
-                        <button className="bg-green-200 px-4 py-1 rounded-lg font-semibold" onClick={()=>{setType("EXPENSE")}}>Expense</button>
-                        <button className="bg-blue-200 px-4 py-1 rounded-lg font-semibold" onClick={()=>{setType("INCOME")}}>Income</button>
+                        <button className="bg-green-200 px-4 py-1 rounded-lg font-semibold" type="button" onClick={()=>{setType("expense")}}>Expense</button>
+                        <button className="bg-blue-200 px-4 py-1 rounded-lg font-semibold" type="button" onClick={()=>{setType("income")}}>Income</button>
                       </div>
 
-                      <select name="" id="">
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
+                      <select className="w-full px-3 py-1 outline-0 border border-black rounded-lg" name="" id="" onChange={(e)=>{setCategory(e.target.value)}}>
+                        <option value="">Select a category</option>
+                        {
+                          type==="expense"? categoriesdata.map((category,index)=>{
+                            return <option value={category.category} key={index} htmlFor="">{category.categoryName}</option>
+                          }): 
+                           <>
+                           <option value="Salary" htmlFor="">Salary</option>
+                           <option value="Bonus" htmlFor="">Bonus</option>
+                           <option value="Others" htmlFor="">Others</option>
+                           </>
+                        }
+                        
                       </select>
 
                       <div className="flex flex-col gap-1">
@@ -196,11 +205,12 @@
                   {
                     transactionsdata.length===0? <div>No Transactions Yet</div>:
                     transactionsdata.map((transaction,index)=>{
-                     return <div key={index} className="flex justify-between w-80 bg-orange-500 h-20">
+                     return <div key={index} className="flex justify-between w-80 px-3 py-2 rounded-lg bg-orange-500">
 
                                 <div className="flex flex-col">
                                   <h1>{transaction.type}</h1>
                                   <h1>{transaction.category}</h1>
+                                  <h1>{transaction.note}</h1>
                                   <h1>{formatDate(transaction.date)}</h1>
                                 </div>
                                 
