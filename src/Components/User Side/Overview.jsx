@@ -1,4 +1,5 @@
     import { useState,useEffect } from "react"
+    import BudgetUsageReport from "./BudgetUsageReport";
 
     function Overview() {
 
@@ -17,13 +18,25 @@
       console.log(transactionsdata)
       console.log(budgetdata)
       
+      {/* Logic for Getting BudgetsCategories */}
+      const BudgetCategories=budgetdata.categoryBudgets;
+      console.log(BudgetCategories)
+
       {/*Logic for Calculating Total Income*/}
       const IncomesArr = transactionsdata.filter(item => item.type === "income");
       const TotalIncome = IncomesArr.reduce((sum, item) => sum + item.amount, 0);
 
       {/*Logic for Calculating Total Income*/}
       const ExpenseArr = transactionsdata.filter(item => item.type === "expense");
+      console.log(ExpenseArr)
       const TotalExpense = ExpenseArr.reduce((sum, item) => sum + item.amount, 0);
+
+      {/* Calculating Budgets for Category */}
+      const getPercentUsed = (amount, budget) => {
+        if (!budget || budget === 0) return 0;
+          return (amount / budget) * 100;
+        };
+
 
       console.log(TotalIncome)
       // Formatting Date and Time
@@ -212,28 +225,12 @@
                     <h1>Category Spending</h1>
                   </div>
                   <div className="flex gap-3">
-                    <div className="flex flex-col gap-2 bg-green-200 rounded-lg">
-                      <div className="flex justify-between items-center">
-                        <h1>Food</h1>
-                        <h1>Percentage</h1>
-                      </div>
-                      <div>Rs Expense/Budget Allocated</div>
-                      <div>Horizintal Bar</div>
-                    </div>
-
-                    <div className="flex flex-col gap-2 bg-green-200 rounded-lg">
-                      <div className="flex justify-between items-center">
-                        <h1>Food</h1>
-                        <h1>Percentage</h1>
-                      </div>
-                      <div>Rs Expense/Budget Allocated</div>
-                      <div>Horizintal Bar</div>
-                    </div>
+                    
+                   <BudgetUsageReport budgets={budgetdata.categoryBudgets} expenses={ExpenseArr} />
+                    
                   </div>
-
+                  
               </div>
-
-
 
         <div className="w-full flex justify-between px-3 py-2 gap-5 rounded-lg bg-blue-100">
 
@@ -288,7 +285,7 @@
                 {
                   transactionsdata.length==0? <div>No Transactions</div>:
                   transactionsdata.map((transaction,index)=>{
-                    return <div className="flex justify-between items-center">
+                    return <div key={index} className="flex justify-between items-center">
                   <div className="flex flex-col gap-2">
                     <h1>{transaction.category}</h1>
                     <h1>{transaction.date}</h1>
