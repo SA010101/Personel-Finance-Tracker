@@ -13,8 +13,8 @@ function Admin() {
         <div className='flex justify-center items-center gap-4 px-6 py-6 bg-green-100'>
           <div>Icon</div>
           <div className='flex flex-col items-start'>
-            <h1 className='text-xl font-bold text-gray-800'>Finance Tracker</h1>
-            <p className='text-sm text-gray-600'>Dashboard User</p>
+            <h1 className='text-xl font-bold text-gray-800'>Admin Panel</h1>
+            <p className='text-sm text-gray-600'>Administrator</p>
           </div>
         </div>
 
@@ -26,25 +26,37 @@ function Admin() {
 
           <NavLink to="" end className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
             <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              📊 <span>Overview</span>
+              📊 <span>Analytics</span>
             </div>
           </NavLink>
 
-          <NavLink to="AddTransaction" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
+          <NavLink to="TransactionOversight" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
             <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              🍽️ <span>Add Transaction</span>
+              🍽️ <span>Transaction Oversight</span>
             </div>
           </NavLink>
 
-          <NavLink to="ManageBudget" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
+          <NavLink to="BudgetMonitoring" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
             <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              👤 <span>Manage Budget</span>
+              👤 <span>Budget Monitoring</span>
+            </div>
+          </NavLink>
+
+          <NavLink to="UserManagement" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
+            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
+              🧾 <span>User Management</span>
+            </div>
+          </NavLink>
+
+          <NavLink to="RolesAndPermissions" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
+            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
+              🧾 <span>Roles and Permissions</span>
             </div>
           </NavLink>
 
           <NavLink to="UpdateProfile" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
             <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              🧾 <span>UpdateProfile</span>
+              🧾 <span>Update Profile</span>
             </div>
           </NavLink>
         </div>
