@@ -82,7 +82,7 @@
     const fetchBudget = async () => {
 
       try {
-        const response = await fetch(`${BASE_URL}/budgets`, {
+        const response = await fetch(`${BASE_URL}/budgets?month=${month}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@
         if (response.ok) {
       alert("Budget fetched")
       console.log(data)
-          setBudgetdata(data)
+          setBudgetdata(data.budgets)
         }
 
       } catch (error) {
