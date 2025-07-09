@@ -4,14 +4,14 @@ function Analytics() {
   const BASE_URL = "http://localhost:9000/app";
   const token = localStorage.getItem("token");
 
-  const [allbudgets,setAllbudgets]=useState([])
-  console.log(allbudgets)
+  const [budgetanalytics,setBudgetAnalytics]=useState([])
+  console.log(budgetanalytics)
 
   {/* API for fetch All Users Budgets */}
-    const fetchBudgets = async () => {
+    const fetchBudgetAnalytics= async () => {
 
       try {
-        const response = await fetch(`${BASE_URL}/getAllUsersBudget`, {
+        const response = await fetch(`${BASE_URL}/admin/analytics/overview`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -22,7 +22,7 @@ function Analytics() {
         console.log('Categories:', data);
 
         if (response.ok) {
-          setAllbudgets(data.budgets)
+          setBudgetAnalytics(data)
         }
 
       } catch (error) {
@@ -31,7 +31,7 @@ function Analytics() {
     };
 
     useEffect(()=>{
-      fetchBudgets()
+      fetchBudgetAnalytics()
     },[])
 
   return (
@@ -41,64 +41,56 @@ function Analytics() {
         <div className="w-full p-6 rounded-lg bg-gradient-to-r from-blue-200 to-blue-100 shadow">
           <div className="flex items-center gap-3">
             <div>📊</div>
-            <h1 className="text-3xl font-bold text-blue-900">Admin Budget Monitoring</h1>
+            <h1 className="text-3xl font-bold text-blue-900">Analytics Dashboard</h1>
           </div>
-          <p className="text-gray-600">Track and manage user budget allocations</p>
         </div>
 
-        {/* Users Budget Sections */}
-    <div className="w-full flex flex-wrap lg:flex-row gap-6">
-          
-          {
-              allbudgets.length===0? <div>No Budgets</div> :
-              allbudgets.map((userbudget,index)=>{
-                return <div key={index} className="flex flex-col px-3 py-3 rounded-lg gap-5 bg-blue-100">
-              <div className="flex items-center gap-2">
-               <div>Icon</div>
-               <div>
-                <h1>Budget Overview</h1>
-                <h1>Monthly allocation</h1>
-               </div>
+          <div className="w-full flex flex-wrap gap-8 bg-green-50 ">
+
+            <div className="flex flex-col items-center">
+              <div>🧍 Total Users</div>
+              <h1>{budgetanalytics.totalUsers}</h1>
             </div>
 
-                <div>
-                    <div className="flex gap-3">
-                      <div>Icon</div>
-                      <div>{userbudget.user}:</div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div>Icon</div>
-                      <div>{userbudget.month}:</div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div>Icon</div>
-                      <div>Rs: {userbudget.totalBudget}</div>
-                    </div>
+            <div className="flex flex-col items-center">
+              <div>✅ Active This Month</div>
+              <h1>{budgetanalytics.activeUsers}</h1>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div>🆕 New Users</div>
+              <h1>{budgetanalytics.newUsers}</h1>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div>💰 Total Income</div>
+              <h1>{budgetanalytics.totalIncome}</h1>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div>💸 Total Expense</div>
+              <h1>{budgetanalytics.totalExpense}</h1>
+            </div>
+
+          </div>
+
+          <div className="w-full flex flex-col gap-5 bg-blue-100">
+            <h1>📊 Top Spending Categories</h1>
+            <div>
+              {
+                budgetanalytics.topCategories.length===0? <div>No Top Categories</div>:
+                budgetanalytics.topCategories.map((category,index)=>{
+                return <div key={index} className="w-full flex justify-between items-center">
+                  <h1>{category.name}</h1>
+                  <h1>Rs: {category.amount}</h1>
                 </div>
-                <div className="flex flex-col gap-2 bg-green-100">
-
-                      <h1>Category Budgets</h1>
-                    {Object.entries(userbudget.categoryBudgets).length > 0 ? (
-                          Object.entries(userbudget.categoryBudgets).map(([category, budget], index) => (
-                            <div key={index} className="flex justify-between border-b py-1 text-gray-800">
-                              <span className="font-medium">{category}</span>
-                              <span>Rs {budget}</span>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="text-sm text-red-500">No category budgets set yet.</div>
-                        )}
+                })
+              }
+                
+            </div>
+          </div>
 
 
-
-                </div>
-                <button>Send Budget Alert</button>
-                  </div>
-              })
-          }
-          
-         
-        </div>
       </div>
     </div>
   );
