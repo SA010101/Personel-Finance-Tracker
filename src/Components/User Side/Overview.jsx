@@ -1,5 +1,6 @@
     import { useState,useEffect } from "react"
     import BudgetUsageReport from "./BudgetUsageReport";
+    import BudgetVsSpendingChart from "./BudgetVsSpendingChart";
 
     function Overview() {
 
@@ -225,7 +226,7 @@
                     <h1>Category Spending</h1>
                   </div>
                   <div className="flex gap-3">
-                    
+                    {/* Budget Usage Percentage */}
                    <BudgetUsageReport budgets={budgetdata.categoryBudgets} expenses={ExpenseArr} />
                     
                   </div>
@@ -268,7 +269,9 @@
                   <h1>Budget vs Actual Spending</h1>
                 </div>
                   
-                  <h1>Here The graph of Budget Vs Actual</h1>
+                  <div className="w-full bg-green-100">
+                    <BudgetVsSpendingChart budgets={budgetdata.categoryBudgets} expenses={ExpenseArr} />
+                  </div>
                 
                   </div>              
 
