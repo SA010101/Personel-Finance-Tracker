@@ -87,7 +87,6 @@ function Analytics() {
                   ) : (
                     <div>No Top Categories</div>
                   )}
-
                 
             </div>
           </div>
