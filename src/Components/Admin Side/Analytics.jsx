@@ -77,15 +77,17 @@ function Analytics() {
           <div className="w-full flex flex-col gap-5 bg-blue-100">
             <h1>📊 Top Spending Categories</h1>
             <div>
-              {
-                budgetanalytics.topCategories.length===0? <div>No Top Categories</div>:
-                budgetanalytics.topCategories.map((category,index)=>{
-                return <div key={index} className="w-full flex justify-between items-center">
-                  <h1>{category.name}</h1>
-                  <h1>Rs: {category.amount}</h1>
-                </div>
-                })
-              }
+              {Array.isArray(budgetanalytics.topCategories) && budgetanalytics.topCategories.length > 0 ? (
+                    budgetanalytics.topCategories.map((category, index) => (
+                      <div key={index} className="w-full flex justify-between items-center">
+                        <h1>{category.name}</h1>
+                        <h1>Rs: {category.amount}</h1>
+                      </div>
+                    ))
+                  ) : (
+                    <div>No Top Categories</div>
+                  )}
+
                 
             </div>
           </div>
