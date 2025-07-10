@@ -35,9 +35,11 @@ function Login() {
           alert('User Login Successful');
           localStorage.setItem('token',data.token)
           localStorage.setItem('userId',data.user._id)
+          localStorage.setItem('userImg',data.user.img)
           localStorage.setItem('userName',data.user.name)
           localStorage.setItem('userEmail',data.user.email)
           localStorage.setItem('userRole',data.user.role)
+          console.log(data)
 
           navigate("/")
 

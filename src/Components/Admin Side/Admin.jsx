@@ -1,4 +1,3 @@
-// import { User } from 'lucide-react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 function Admin() {
@@ -6,62 +5,49 @@ function Admin() {
 
   return (
     <div className='flex flex-col lg:flex-row min-h-screen'>
+      
       {/* Sidebar */}
-      <div className='flex flex-col w-full lg:w-75 shadow-md sticky top-0 bg-white z-10'>
+      <div className='flex flex-col w-full lg:w-80 bg-white border-r border-gray-200 shadow-md sticky top-0 z-10'>
 
         {/* Header */}
-        <div className='flex justify-center items-center gap-4 px-6 py-6 bg-green-100'>
-          <div>Icon</div>
+        <div className='flex justify-center items-center gap-4 px-6 py-6 bg-gradient-to-r from-green-200 via-green-100 to-green-50'>
+          <div className="text-2xl">🛠️</div>
           <div className='flex flex-col items-start'>
-            <h1 className='text-xl font-bold text-gray-800'>Admin Panel</h1>
-            <p className='text-sm text-gray-600'>Administrator</p>
+            <h1 className='text-xl font-bold text-green-800'>Admin Panel</h1>
+            <p className='text-sm text-gray-700'>Administrator</p>
           </div>
         </div>
 
-        <hr className='border-t border-gray-200 my-2' />
+        <hr className='border-t border-gray-300 my-2' />
 
         {/* Navigation */}
-        <div className='flex flex-col gap-4 px-4 py-6'>
-          <h2 className='text-xs font-semibold text-gray-500 tracking-widest px-2'>MANAGEMENT</h2>
+        <div className='flex flex-col gap-3 px-4 py-4'>
+          <h2 className='text-xs font-bold text-gray-500 tracking-widest px-2 uppercase'>Management</h2>
 
-          <NavLink to="" end className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
-            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              📊 <span>Analytics</span>
-            </div>
-          </NavLink>
-
-          <NavLink to="TransactionOversight" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
-            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              🍽️ <span>Transaction Oversight</span>
-            </div>
-          </NavLink>
-
-          <NavLink to="BudgetMonitoring" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
-            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              👤 <span>Budget Monitoring</span>
-            </div>
-          </NavLink>
-
-          <NavLink to="UserManagement" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
-            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              🧾 <span>User Management</span>
-            </div>
-          </NavLink>
-
-          <NavLink to="RolesAndPermissions" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
-            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              🧾 <span>Roles and Permissions</span>
-            </div>
-          </NavLink>
-
-          <NavLink to="UpdateProfile" className={({ isActive }) => `group w-full rounded-lg transition ${isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-700'}`}>
-            <div className='flex items-center gap-3 px-4 py-2 font-medium'>
-              🧾 <span>Update Profile</span>
-            </div>
-          </NavLink>
+          {[
+            { to: "", label: "Analytics", icon: "📊" },
+            { to: "TransactionOversight", label: "Transaction Oversight", icon: "🍽️" },
+            { to: "BudgetMonitoring", label: "Budget Monitoring", icon: "👤" },
+            { to: "UserManagement", label: "User Management", icon: "🧾" },
+            { to: "RolesAndPermissions", label: "Roles and Permissions", icon: "🛡️" },
+            { to: "UpdateProfile", label: "Update Profile", icon: "🧑‍💼" },
+          ].map(({ to, label, icon }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={to === ""}
+              className={({ isActive }) =>
+                `group flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition 
+                ${isActive ? 'bg-blue-100 text-blue-800 shadow-inner' : 'text-gray-700 hover:bg-gray-100'}`
+              }
+            >
+              <span className='text-lg'>{icon}</span>
+              <span>{label}</span>
+            </NavLink>
+          ))}
         </div>
 
-        <hr className='border-t border-gray-200 my-2' />
+        <hr className='border-t border-gray-300 my-2' />
 
         {/* Footer Controls */}
         <div className='flex flex-col gap-2 px-4 py-4'>
@@ -83,7 +69,7 @@ function Admin() {
           </button>
         </div>
 
-        <hr className='border-t border-gray-200 my-2' />
+        <hr className='border-t border-gray-300 my-2' />
 
         {/* Version Info */}
         <div className='text-center text-xs text-gray-500 py-4'>
@@ -92,8 +78,8 @@ function Admin() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className='flex-grow bg-gray-50'>
+      {/* Main Content Area */}
+      <div className='flex-grow bg-gray-50 p-4 lg:p-8 overflow-y-auto'>
         <Outlet />
       </div>
     </div>
