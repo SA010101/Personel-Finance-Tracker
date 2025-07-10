@@ -5,7 +5,6 @@ function Analytics() {
   const token = localStorage.getItem("token");
 
   const [budgetanalytics,setBudgetAnalytics]=useState([])
-  console.log(budgetanalytics)
 
   {/* API for fetch All Users Budgets */}
     const fetchBudgetAnalytics= async () => {
